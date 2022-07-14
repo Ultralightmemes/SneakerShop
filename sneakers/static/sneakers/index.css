@@ -1,0 +1,13 @@
+.middle {
+    margin-top: 7em;
+}
+
+body {
+    background: url("images/shop.jpg");
+    background-size: 100%;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}

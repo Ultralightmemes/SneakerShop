@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sneakershop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body style="background-color: #9451ff">
+
+{% include 'sneakers/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <img src="{{ sneaker.image.url }}" width="800em" alt="sneaker">
+        </div>
+        <div class="col-4">
+            <h1>{{ sneaker.brand.name|add:' '|add:sneaker.model_name }}</h1>
+            <p>{{ sneaker.category.category_name }}</p>
+            <h2>{{ sneaker.cost }}$</h2>
+            <select class="form-select" style="width: 10em" >
+                <option disabled selected>Размер</option>
+                {% for size in sneaker.size_set.all %}
+                    <option>{{ size.eur_size }}</option>
+                {% endfor %}
+            </select>
+        <button type="button" class="btn btn-secondary mt-3">Добавить в корзину</button>
+        <h6 class="mt-3" style="text-align: justify">{{ sneaker.description }}</h6>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
