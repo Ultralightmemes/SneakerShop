@@ -27,7 +27,8 @@ class Sneaker(models.Model):
     prod_country = models.CharField(max_length=50)
     cost = models.FloatField()
     description = models.CharField(max_length=1000)
-    image = models.ImageField(upload_to='sneaker/%Y/%m/%d/', null=True, blank=True)
+    image = models.ImageField(upload_to='sneaker/%Y/%m/%d/', null=True, blank=True,
+                              default='sneaker/no_image.jpg')
     material = models.CharField(max_length=100)
     inner_material = models.CharField(max_length=100)
     vendor_code = models.CharField(max_length=9)

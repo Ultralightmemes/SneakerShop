@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'sneakers/basket.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sneakers/index.css' %}">
+</head>
+<body>
+
+{% include 'sneakers/navbar.html' %}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-3">
+            {% if side %}
+                {% include 'sneakers/profile_sidebar.html' %}
+            {% endif %}
+            <h4 style="background-color: white; border: 1px solid black; border-radius: 10px" class="ps-2">
+                Товаров в корзине - {{ orders|length }}</h4>
+            <h4 style="background-color: white; border: 1px solid black; border-radius: 10px" class="ps-2">
+                Сумма заказа - {{ sneakers_cost }}$</h4>
+        </div>
+        <div class="col-9">
+
+            {% for order in orders %}
+                <div class="card mb-3">
+                    <a href="{% url 'sneakers:sneaker' order.sneaker.id %}">
+                        <img src="{{ order.sneaker.image.url }}" class="card-img-top" alt="..."
+                             style="width: 200px; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ order.sneaker }}</h5>
+                            <p class="card-text">{{ order.sneaker.description }}</p>
+                    </a>
+                    <div class="mt-5">
+                        <form method="post" style="display: inline" action="{% url 'basket:delete_sneaker' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="order" value="{{ order.id }}">
+                            <button type="submit" class="btn btn-primary mt-5">Удалить из корзины</button>
+                        </form>
+                        <h4 class="card-text mt-5" id="price">{{ order.sneaker.cost }}$</h4>
+                        <h4 class="card-text mt-5" style="margin-right: 1em" id="price">Размер: {{ order.size }}en</h4>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+
+    </div>
+</div>
+
+</body>
+</html>

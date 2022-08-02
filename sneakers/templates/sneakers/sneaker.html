@@ -19,14 +19,22 @@
             <h1>{{ sneaker.brand.name|add:' '|add:sneaker.model_name }}</h1>
             <p>{{ sneaker.category.category_name }}</p>
             <h2>{{ sneaker.cost }}$</h2>
-            <select class="form-select" style="width: 10em" >
-                <option disabled selected>Размер</option>
-                {% for size in sneaker.size_set.all %}
-                    <option>{{ size.eur_size }}</option>
-                {% endfor %}
-            </select>
-        <button type="button" class="btn btn-secondary mt-3">Добавить в корзину</button>
-        <h6 class="mt-3" style="text-align: justify">{{ sneaker.description }}</h6>
+            <form method="post" action="{% url 'basket:add_sneaker' %}">
+                <select class="form-select" style="width: 10em" name="size">
+                    <option disabled selected>Размер</option>
+                    {% for size in sneaker.size_set.all %}
+                        {% if size.count == 0 %}
+                            <option name="size" disabled value="{{ size.pk }}">{{ size.eur_size }}</option>
+                        {% else %}
+                            <option name="size" value="{{ size.pk }}">{{ size.eur_size }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                {% csrf_token %}
+                <input type="hidden" value="{{ sneaker.pk }}" name="sneaker_id">
+                <button type="submit" class="btn btn-secondary mt-3">Добавить в корзину</button>
+            </form>
+            <h6 class="mt-3" style="text-align: justify">{{ sneaker.description }}</h6>
         </div>
     </div>
 </div>

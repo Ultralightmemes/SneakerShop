@@ -33,6 +33,9 @@
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary btn-block">Вход</button>
             </form>
+            <form method="get" action="{% url 'sneakers:register' %}" class="mt-2">
+                <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+            </form>
         </div>
     </div>
 </div>
